@@ -11,11 +11,26 @@ import Productos from './Components/Productos';
 import Proveedores from './Components/Proveedores'; 
 import Nav from './Components/Navbar';
 import Registrar from './Components/Register';
+import { useState } from 'react';
 function App() {
+  const[logged, setLogged] = useState(false); 
+  const abrirHome = () => {
+     setLogged(true); 
+  }
+
+  // const CerrarHome = () => {
+  //   if(logged){
+  //    setLogged(false); 
+  //   }
+  // }
+
   return (
     <>
-        <Nav/> 
-     <Container>
+  {
+    logged ? (
+      <>
+      <Nav/> 
+      <Container>
      <Row className="justify-content-md-center p-5"> 
      <Col >
      <Routes>
@@ -30,7 +45,25 @@ function App() {
      </Col>
      </Row>
      </Container>
-      
+      </>
+    ) : (
+      <>
+      <Container>
+     <Row className="justify-content-md-center p-5"> 
+     <Col >
+     <Routes>
+          <Route path='/' element={<Login loguear={abrirHome}/>}/>
+          <Route path='/registrar' element={<Registrar/>}/>
+          <Route path='*' element={<Navigate to="/"/>}/>
+       </Routes>
+     </Col>
+     </Row>
+     </Container>
+
+      </>
+     
+    )
+  }
     </>
   )
 }

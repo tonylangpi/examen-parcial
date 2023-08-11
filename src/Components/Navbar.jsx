@@ -16,9 +16,9 @@ const NavExamen = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav text-white">
             <Nav className="me-auto text-white">
-              <Nav.Link as={Link} to="/registrar">
+              {/* <Nav.Link as={Link} to="/registrar">
                 REGISTRAR
-              </Nav.Link>
+              </Nav.Link> */}
               <Nav.Link as={Link} to="/clientes">
                 CLIENTES
               </Nav.Link>

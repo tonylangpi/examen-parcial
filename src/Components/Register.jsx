@@ -2,10 +2,11 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {Link}  from 'react-router-dom';
 const Register = () => {
-  const {
+  const { 
     register,
     handleSubmit,
     formState: { errors, isValid },
@@ -24,7 +25,8 @@ const Register = () => {
     reset();
   });
   return (
-    <Card className="m-3" >
+    <>
+        <Card className="m-3" >
     <Card.Body>
       <Card.Title>REGISTRAR</Card.Title>
       <form onSubmit={onSubmit} >
@@ -105,8 +107,13 @@ const Register = () => {
            REGISTRAR
         </Button>
       </form>
+      
+      <Link to="/login">INICIAR SESIÓN</Link>
     </Card.Body>
   </Card>
+ 
+    </>
+   
   )
 }
 

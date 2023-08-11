@@ -2,58 +2,73 @@ import  { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import { useForm } from "react-hook-form";
+import {Link}  from 'react-router-dom';
+const Login = ({loguear}) => {
+  const { 
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      correo: "",
+      password: "",
+    },
+  });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
+  const onSubmit = handleSubmit((data) => {
+    alert(JSON.stringify(data));
+    loguear();
+    reset();
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validación básica de campos
-    const newErrors = {};
-    if (!email) newErrors.email = 'El correo electrónico es obligatorio.';
-    if (!password) newErrors.password = 'La contraseña es obligatoria.';
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
-      // Aquí puedes implementar la lógica de autenticación
-      console.log('Iniciando sesión...');
-    }
-  };
   return (
     <>
     <Card className="m-3" >
     <Card.Body>
       <Card.Title>LOGIN</Card.Title>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={onSubmit}>
         <Form.Group controlId="email">
           <Form.Label>Correo Electrónico</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Ingresa tu correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            isInvalid={!!errors.email}
+            {...register("correo", {
+            required: {
+              value: true,
+              message: "Correo es requerido",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+              message: "Correo no válido",
+            },
+          })}
+            placeholder='abdcd@gmail.com'
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.email}
-          </Form.Control.Feedback>
+          {errors.correo && <span className='text-danger'>{errors.correo.message}</span>}
         </Form.Group>
         <Form.Group controlId="password">
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
             type={showPassword ? 'text' : 'password'}
             placeholder="Ingresa tu contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            isInvalid={!!errors.password}
+            {...register("password", {
+            required: {
+              value: true,
+              message: "Contraseña es requerida",
+            },
+            minLength: {
+              value: 8,
+              message: "Contraseña debe ser mayor a 8 caracteres",
+            },
+            pattern: {
+              value: /^(?=.*[A-Z])(?=.*\d)/,
+              message: "La contraseña debe tener al menos un digito, una mayuscula y 8 caracteres",
+            },
+          })}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.password}
-          </Form.Control.Feedback>
+           {errors.password && <span className='text-danger'>{errors.password.message}</span>}
         </Form.Group>
         <Form.Group>
         <Form.Check
@@ -63,10 +78,11 @@ const Login = () => {
             onChange={() => setShowPassword(!showPassword)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={!isValid}>
           Iniciar Sesión
         </Button>
       </Form>
+      <Link to="/registrar">REGISTRAR</Link>
     </Card.Body>
   </Card>
     </>
