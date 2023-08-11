@@ -11,6 +11,7 @@ import Productos from './Components/Productos';
 import Proveedores from './Components/Proveedores'; 
 import Nav from './Components/Navbar';
 import Registrar from './Components/Register';
+import Sueldos from './Components/Salarios';
 import { useState } from 'react';
 function App() {
   const[logged, setLogged] = useState(false); 
@@ -40,6 +41,7 @@ function App() {
           <Route path='/productos' element={<Productos/>}/>
           <Route path='/proveedores' element={<Proveedores/>}/>
           <Route path='/registrar' element={<Registrar/>}/>
+          <Route path='/sueldos' element={<Sueldos/>}/>
           <Route path='*' element={<Navigate to="/"/>}/>
        </Routes>
      </Col>

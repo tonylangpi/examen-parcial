@@ -28,6 +28,9 @@ const NavExamen = () => {
               <Nav.Link as={Link} to="/proveedores">
                 PROVEEDORES
               </Nav.Link>
+              <Nav.Link as={Link} to="/sueldos">
+                CONTROL DE SUELDOS
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

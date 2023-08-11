@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import { useForm } from "react-hook-form";
 import {Link}  from 'react-router-dom';
@@ -18,11 +19,18 @@ const Login = ({loguear}) => {
     },
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [info, setInfo] = useState();
+  const [show, setShow] = useState(false);
   const onSubmit = handleSubmit((data) => {
-    alert(JSON.stringify(data));
-    loguear();
+    setInfo(data);
+    setShow(true);
+    setTimeout(function(){
+      loguear();
+   }, 4000);
     reset();
   });
+  
+  const handleClose = () => setShow(false);
 
   return (
     <>
@@ -85,6 +93,19 @@ const Login = ({loguear}) => {
       <Link to="/registrar">REGISTRAR</Link>
     </Card.Body>
   </Card>
+  <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-dark">Bienvenido</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-dark">
+          <p>TU CORREO ES {info?.correo}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
